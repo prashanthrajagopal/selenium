@@ -173,7 +173,7 @@
 		83E5B3840EFF6DB7004AA772 /* JSONRESTResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E5B3110EFF6749004AA772 /* JSONRESTResource.m */; };
 		889F61FB1A6FA40100AFD3B1 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889F61F91A6FA40100AFD3B1 /* Default-667h@2x.png */; };
 		889F61FC1A6FA40100AFD3B1 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889F61FA1A6FA40100AFD3B1 /* Default-736h@3x.png */; };
-		889F61FE1A6FA75A00AFD3B1 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889F61FD1A6FA75A00AFD3B1 /* Launch Screen.xib */; };
+		889F62001A6FB5CE00AFD3B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889F61FF1A6FB5CE00AFD3B1 /* Images.xcassets */; };
 		FD61E6990FE150E5006E1274 /* WebDriverUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = FD61E6980FE150E5006E1274 /* WebDriverUtilities.m */; };
 		FD61E69E0FE151A4006E1274 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD61E69D0FE151A4006E1274 /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		FD61E6A90FE151D2006E1274 /* WebDriverPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FD61E6A60FE151D2006E1274 /* WebDriverPreferences.m */; };
@@ -364,7 +364,7 @@
 		83E5B3110EFF6749004AA772 /* JSONRESTResource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONRESTResource.m; sourceTree = "<group>"; };
 		889F61F91A6FA40100AFD3B1 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-667h@2x.png"; path = "../resources/Default-667h@2x.png"; sourceTree = "<group>"; };
 		889F61FA1A6FA40100AFD3B1 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-736h@3x.png"; path = "../resources/Default-736h@3x.png"; sourceTree = "<group>"; };
-		889F61FD1A6FA75A00AFD3B1 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		889F61FF1A6FB5CE00AFD3B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iWebDriver/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		FD61E6970FE150E5006E1274 /* WebDriverUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebDriverUtilities.h; sourceTree = "<group>"; };
 		FD61E6980FE150E5006E1274 /* WebDriverUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebDriverUtilities.m; sourceTree = "<group>"; };
 		FD61E69D0FE151A4006E1274 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
@@ -445,7 +445,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				889F61FD1A6FA75A00AFD3B1 /* Launch Screen.xib */,
 				839988BA0EE5F0500074D106 /* Tests */,
 				839986AC0EE3AA720074D106 /* Web server extensions */,
 				289233A00DB2D0730083E9F9 /* Main View */,
@@ -478,6 +477,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				889F61FF1A6FB5CE00AFD3B1 /* Images.xcassets */,
 				402D0E4C1652189C00690ED6 /* Default-568h@2x.png */,
 				402D0E4D1652189C00690ED6 /* Default.png */,
 				402D0E4E1652189C00690ED6 /* Default@2x.png */,
@@ -855,6 +855,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				889F61FB1A6FA40100AFD3B1 /* Default-667h@2x.png in Resources */,
+				889F62001A6FB5CE00AFD3B1 /* Images.xcassets in Resources */,
 				889F61FC1A6FA40100AFD3B1 /* Default-736h@3x.png in Resources */,
 				8311AB7A0F44EF0500921B78 /* selenium-icon.png in Resources */,
 				644F14ED10AB4EF400858ECA /* Settings.bundle in Resources */,
@@ -863,7 +864,6 @@
 				402D0E501652189C00690ED6 /* Default.png in Resources */,
 				402D0E511652189C00690ED6 /* Default@2x.png in Resources */,
 				402D0E671652FCCB00690ED6 /* Storyboard_iPad.storyboard in Resources */,
-				889F61FE1A6FA75A00AFD3B1 /* Launch Screen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,6 +1081,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COCOAHTTPSERVER_HEADERS = "\"$(PROJECT_DIR)/lib/buildtime-src/cocoahttpserver/build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/usr/local/include\"";
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
@@ -1117,6 +1119,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				COPY_PHASE_STRIP = YES;
