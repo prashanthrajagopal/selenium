@@ -104,7 +104,7 @@ public class ProxySettingTest extends JUnit4TestBase {
     assertTrue("Proxy should have been called", proxyServer.hasBeenCalled("simpleTest.html"));
   }
 
-  @Ignore(value = {ANDROID, IPHONE, OPERA_MOBILE, PHANTOMJS, SAFARI},
+  @Ignore(value = {ANDROID, IPHONE, OPERA_MOBILE, PHANTOMJS, SAFARI, HTMLUNIT},
           reason = "Android/Iphone/PhantomJS - not tested,"
                    + "Opera mobile/Safari - not implemented")
   @NeedsLocalEnvironment
@@ -131,7 +131,7 @@ public class ProxySettingTest extends JUnit4TestBase {
         "Hello, world!", driver.findElement(By.tagName("h3")).getText());
   }
 
-  @Ignore(value = {ANDROID, IPHONE, OPERA_MOBILE, PHANTOMJS, SAFARI},
+  @Ignore(value = {ANDROID, IPHONE, OPERA_MOBILE, PHANTOMJS, SAFARI, HTMLUNIT},
           reason = "Android/Iphone/PhantomJS - not tested,"
                    + "Opera mobile/Safari - not implemented")
   @NeedsLocalEnvironment
@@ -235,6 +235,7 @@ public class ProxySettingTest extends JUnit4TestBase {
       public void handleHttpRequest(
           HttpRequest request, HttpResponse response, HttpControl control) {
         response.charset(Charsets.UTF_8)
+            .header(HttpHeaders.CONTENT_TYPE, "text/html")
             .content(responseHtml)
             .end();
       }

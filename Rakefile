@@ -16,7 +16,6 @@ verbose(false)
 
 # The CrazyFun build grammar. There's no magic here, just ruby
 require 'rake-tasks/crazy_fun'
-require 'rake-tasks/crazy_fun/mappings/android'
 require 'rake-tasks/crazy_fun/mappings/export'
 require 'rake-tasks/crazy_fun/mappings/folder'
 require 'rake-tasks/crazy_fun/mappings/gcc'
@@ -36,7 +35,6 @@ require 'rake-tasks/dotnet'
 require 'rake-tasks/zip'
 require 'rake-tasks/c'
 require 'rake-tasks/java'
-require 'rake-tasks/iphone'
 require 'rake-tasks/selenium'
 require 'rake-tasks/se-ide'
 require 'rake-tasks/ie_code_generator'
@@ -51,7 +49,7 @@ end
 verbose($DEBUG)
 
 def version
-  "2.38.0"
+  "2.39.0"
 end
 ide_version = "1.10.0"
 
@@ -72,7 +70,6 @@ crazy_fun = CrazyFun.new
 #
 # If crazy fun doesn't know how to handle a particular output type ("java_library"
 # in the example above) then it will throw an exception, stopping the build
-AndroidMappings.new.add_all(crazy_fun)
 ExportMappings.new.add_all(crazy_fun)
 FolderMappings.new.add_all(crazy_fun)
 GccMappings.new.add_all(crazy_fun)
@@ -89,7 +86,7 @@ VisualStudioMappings.new.add_all(crazy_fun)
 # need to fall back to prebuilt binaries. The prebuilt binaries are stored in
 # a directory structure identical to that used in the "build" folder, but
 # rooted at one of the following locations:
-["android/prebuilt", "cpp/prebuilt", "ide/main/prebuilt", "javascript/firefox-driver/prebuilt"].each do |pre|
+["cpp/prebuilt", "ide/main/prebuilt", "javascript/firefox-driver/prebuilt"].each do |pre|
   crazy_fun.prebuilt_roots << pre
 end
 
@@ -103,7 +100,7 @@ crazy_fun.create_tasks(Dir["**/build.desc"])
 task :default => [:test]
 
 
-task :all => [:'selenium-java', :'android']
+task :all => [:'selenium-java']
 task :all_zip => [:'selenium-java_zip']
 task :chrome => [ "//java/client/src/org/openqa/selenium/chrome" ]
 task :common_core => [ "//common:core" ]
@@ -126,8 +123,6 @@ task :support => [
   "//java/client/src/org/openqa/selenium/lift",
   "//java/client/src/org/openqa/selenium/support",
 ]
-task :iphone_client => ['//java/client/src/org/openqa/selenium/iphone']
-task :iphone => [:iphone_server, :iphone_client]
 
 desc 'Build the standalone server'
 task 'selenium-server-standalone' => '//java/server/src/org/openqa/grid/selenium:selenium:uber'
@@ -142,7 +137,6 @@ task :test_javascript => [
   '//javascript/webdriver:test:run',
   '//javascript/selenium-atoms:test:run',
   '//javascript/selenium-core:test:run']
-task :test_android => ["//java/client/test/org/openqa/selenium/android:android-test:run"]
 task :test_chrome => [ "//java/client/test/org/openqa/selenium/chrome:test:run" ]
 task :test_chrome_atoms => [
   '//javascript/atoms:test_chrome:run',
@@ -178,10 +172,6 @@ task :test_support => [
   "//java/client/test/org/openqa/selenium/support:SmallTests:run",
   "//java/client/test/org/openqa/selenium/support:LargeTests:run"
 ]
-task :test_iphone => [:test_iphone_server, '//java/client/test/org/openqa/selenium/iphone:test:run']
-task :android => [:android_client, :android_server]
-task :android_client => ['//java/client/src/org/openqa/selenium/android']
-task :android_server => ['//android:android-server']
 
 # TODO(simon): test-core should go first, but it's changing the least for now.
 task :test_selenium => [ :'test-rc', :'test-v1-emulation', :'test-core']
@@ -231,9 +221,6 @@ task :test_java => [
   :test_java_webdriver,
   :test_selenium,
   "test_grid",
-  # Android should be installed and the tests should be ran
-  # before commits.
-  :test_android
 ]
 
 task :test_rb => [
@@ -263,20 +250,13 @@ if (python?)
 end
 
 
-task :build => [:all, :iphone, :remote, :selenium]
+task :build => [:all, :remote, :selenium]
 
 desc 'Clean build artifacts.'
 task :clean do
   rm_rf 'build/'
-  rm_rf 'iphone/build/'
-  rm_rf 'iphone/src/objc/atoms.h'
-  rm_rf 'android/bin/'
-  rm_rf 'android/build/'
-  rm_rf 'android/libs/'
-  rm_rf 'android/client/bin/'
   rm_rf 'java/client/build/'
   rm_rf 'dist/'
-  Android::Clean.new()
 end
 
 task :dotnet => [ "//dotnet", "//dotnet:support", "//dotnet:core", "//dotnet:webdriverbackedselenium" ]
@@ -508,6 +488,18 @@ GeckoSDKs.new do |sdks|
   sdks.add 'third_party/gecko-25/win32',
            'http://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/25.0/sdk/xulrunner-25.0.en-US.win32.sdk.zip',
            '9dcc079405984ae01f40da51920ae737'
+
+  sdks.add 'third_party/gecko-26/linux',
+           'http://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/26.0/sdk/xulrunner-26.0.en-US.linux-i686.sdk.tar.bz2',
+           'a2553aa77512772544d3e48b3303754e'
+
+  sdks.add 'third_party/gecko-26/linux64',
+           'http://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/26.0/sdk/xulrunner-26.0.en-US.linux-x86_64.sdk.tar.bz2',
+           '11eb859c67f3540f5331a0c124f9197d'
+
+  sdks.add 'third_party/gecko-26/win32',
+           'http://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/26.0/sdk/xulrunner-26.0.en-US.win32.sdk.zip',
+           '5df776bf4feb107392ac32c90652dcb8'
 end
 
 task :'selenium-server_zip' do
@@ -597,37 +589,37 @@ task :test_selenium_py => [:'selenium-core', :'selenium-server-standalone'] do
     end
 end
 
-#### iPhone ####
-task :iphone_server do
-  sdk = iPhoneSDK?
-  if sdk != nil then
-    puts "Building iWebDriver iphone app."
-    sh "cd iphone && xcodebuild -sdk #{sdk} ARCHS=i386 -target iWebDriver -configuration Debug", :verbose => false
-  else
-    puts "XCode not found. Not building the iphone driver."
-  end
-end
-
-# This does not depend on :iphone_server because the dependancy is specified in xcode
-task :test_iphone_server do
-  sdk = iPhoneSDK?
-  if sdk != nil then
-    sh "cd iphone && xcodebuild -sdk #{sdk} ARCHS=i386 -target Tests -configuration Debug"
-  else
-    puts "XCode and/or iPhoneSDK not found. Not testing iphone_server."
-  end
-end
-
-file "iphone/src/objc/atoms.h" => ["//iphone:atoms"] do |task|
-  puts "Writing: #{task}"
-  cp "build/iphone/atoms.h", "iphone/src/objc/atoms.h"
-end
-task :iphone_atoms => ["iphone/src/objc/atoms.h"]
-
 file "cpp/iedriver/sizzle.h" => [ "//third_party/js/sizzle:sizzle:header" ] do
   cp "build/third_party/js/sizzle/sizzle.h", "cpp/iedriver/sizzle.h"
 end
+
 task :sizzle_header => [ "cpp/iedriver/sizzle.h" ]
+
+task :ios_driver => [
+  "//javascript/atoms/fragments:get_visible_text:ios",
+  "//javascript/atoms/fragments:click:ios",
+  "//javascript/atoms/fragments:back:ios",
+  "//javascript/atoms/fragments:forward:ios",
+  "//javascript/atoms/fragments:submit:ios",
+  "//javascript/atoms/fragments:xpath:ios",
+  "//javascript/atoms/fragments:xpaths:ios",
+  "//javascript/atoms/fragments:type:ios",
+  "//javascript/atoms/fragments:get_attribute:ios",
+  "//javascript/atoms/fragments:clear:ios",
+  "//javascript/atoms/fragments:is_selected:ios",
+  "//javascript/atoms/fragments:is_enabled:ios",
+  "//javascript/atoms/fragments:is_shown:ios",
+  "//javascript/atoms/fragments:stringify:ios",
+  "//javascript/atoms/fragments:link_text:ios",
+  "//javascript/atoms/fragments:link_texts:ios",
+  "//javascript/atoms/fragments:partial_link_text:ios",
+  "//javascript/atoms/fragments:partial_link_texts:ios",
+  "//javascript/atoms/fragments:get_interactable_size:ios",
+  "//javascript/atoms/fragments:scroll_into_view:ios",
+  "//javascript/atoms/fragments:get_effective_style:ios",
+  "//javascript/atoms/fragments:get_element_size:ios",
+  "//javascript/webdriver/atoms/fragments:get_location_in_view:ios"
+]
 
 file "build/javascript/deps.js" => FileList[
     "third_party/closure/goog/**/*.js",
@@ -671,7 +663,6 @@ task :release => [
     '//java/server/src/org/openqa/selenium/server:server:zip',
     '//java/server/src/org/openqa/grid/selenium:selenium:zip',
     '//java/client/src/org/openqa/selenium:client-combined:zip',
-    '//android:android-server'
   ] do |t|
   # Unzip each of the deps and rename the pieces that need renaming
   renames = {
@@ -754,7 +745,7 @@ namespace :docs do
     # First, delete the old docs.
     rm_rf "docs/api/javascript"
 
-    cmd = "java -jar third_party/java/dossier/dossier-0.1.1.jar"
+    cmd = "java -jar third_party/java/dossier/dossier-0.2.1.jar"
     cmd << " --closure_library third_party/closure/goog"
     cmd << " -o docs/api/javascript"
     cmd << " -s javascript/atoms"
@@ -852,6 +843,11 @@ namespace :marionette do
       h.write(b.string)
     end
   end
+end
+
+task :authors do
+  puts "Generating AUTHORS file"
+  sh "(git log --use-mailmap --format='%aN <%aE>' ; cat .OLD_AUTHORS) | sort -uf > AUTHORS"
 end
 
 at_exit do

@@ -1,4 +1,19 @@
-## v2.38.0-dev
+## v2.40.0-dev
+
+* Introduced `Promise#thenCatch()` and `Promise#thenFinally()`.
+* Deprecated `Promise#addCallback()`, `Promise#addCallbacks()`,
+    `Promise#addErrback()`, and `Promise#addBoth()`.
+
+## v2.39.0
+
+* Version bump to stay in sync with the Selenium project.
+
+## v2.38.1
+
+* FIXED: 6686: Changed `webdriver.promise.Deferred#cancel()` to silently no-op
+    if the deferred has already been resolved.
+
+## v2.38.0
 
 * When a promise is rejected, always annotate the stacktrace with the parent
     flow state so users can identify the source of an error.

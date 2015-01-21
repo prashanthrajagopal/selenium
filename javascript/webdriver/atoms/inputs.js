@@ -34,12 +34,10 @@ goog.require('webdriver.atoms.element');
  * @param {Element} element The element to send the keyboard input to, or
  *     {@code null} to use the document's active element.
  * @param {!Array.<string>} keys The keys to type on the element.
- * @param {{currentPos: number, pressed: !Array.<!bot.Keyboard.Key>}=} opt_state
- *     The predefined keyboard state to use.
+ * @param {bot.Keyboard.State=} opt_state The predefined keyboard state to use.
  * @param {boolean=} opt_persistModifiers Whether modifier keys should remain
  *     pressed when this function ends.
- * @return {{currentPos: number, pressed: !Array.<!bot.Keyboard.Key>}} The
- *     keyboard state.
+ * @return {bot.Keyboard.State} The keyboard state.
  */
 webdriver.atoms.inputs.sendKeys = function(
     element, keys, opt_state, opt_persistModifiers) {
@@ -54,8 +52,6 @@ webdriver.atoms.inputs.sendKeys = function(
 
   return keyboard.getState();
 };
-goog.exportSymbol('webdriver.atoms.inputs.sendKeys',
-                  webdriver.atoms.inputs.sendKeys);
 
 
 /**
@@ -76,8 +72,6 @@ webdriver.atoms.inputs.click = function(element, opt_state) {
   bot.action.click(element, null, mouse);
   return mouse.getState();
 };
-goog.exportSymbol('webdriver.atoms.inputs.click',
-                  webdriver.atoms.inputs.click);
 
 
 /**
@@ -125,8 +119,6 @@ webdriver.atoms.inputs.mouseMove = function(element, x_offset, y_offset,
   mouse.move(target, coords);
   return mouse.getState();
 };
-goog.exportSymbol('webdriver.atoms.inputs.mouseMove',
-                  webdriver.atoms.inputs.mouseMove);
 
 
 /**
@@ -140,8 +132,6 @@ webdriver.atoms.inputs.mouseButtonDown = function(opt_state) {
   mouse.pressButton(bot.Mouse.Button.LEFT);
   return mouse.getState();
 };
-goog.exportSymbol('webdriver.atoms.inputs.mouseButtonDown',
-                  webdriver.atoms.inputs.mouseButtonDown);
 
 
 /**
@@ -155,8 +145,6 @@ webdriver.atoms.inputs.mouseButtonUp = function(opt_state) {
   mouse.releaseButton();
   return mouse.getState();
 };
-goog.exportSymbol('webdriver.atoms.inputs.mouseButtonUp',
-                  webdriver.atoms.inputs.mouseButtonUp);
 
 
 /**
@@ -173,8 +161,6 @@ webdriver.atoms.inputs.doubleClick = function(opt_state) {
   mouse.releaseButton();
   return mouse.getState();
 };
-goog.exportSymbol('webdriver.atoms.inputs.doubleClick',
-                  webdriver.atoms.inputs.doubleClick);
 
 
 /**
@@ -182,6 +168,7 @@ goog.exportSymbol('webdriver.atoms.inputs.doubleClick',
  *
  * @param {bot.Mouse.State=} opt_state The serialized state of the mouse.
  * @return {!bot.Mouse.State} The mouse state.
+ * @deprecated Use {@link webdriver.atoms.inputs.mouseClick}.
  */
 webdriver.atoms.inputs.rightClick = function(opt_state) {
   var mouse = new bot.Mouse(opt_state);
@@ -189,5 +176,26 @@ webdriver.atoms.inputs.rightClick = function(opt_state) {
   mouse.releaseButton();
   return mouse.getState();
 };
-goog.exportSymbol('webdriver.atoms.inputs.rightClick',
-                  webdriver.atoms.inputs.rightClick);
+
+
+/**
+ * Executes a mousedown/up with the given button at the current mouse
+ * location.
+ *
+ * @param {bot.Mouse.Button} button The button to press.
+ * @param {bot.Mouse.State=} opt_state The serialized state of the mouse.
+ * @return {!bot.Mouse.State} The mouse state.
+ */
+webdriver.atoms.inputs.mouseClick = function(button, opt_state) {
+  // If no target element is specified, try to find it from the
+  // client (x, y) location. No, this is not exact.
+  if (opt_state && opt_state.clientXY && !opt_state.element &&
+      document.elementFromPoint) {
+    opt_state.element = document.elementFromPoint(
+        opt_state.clientXY.x, opt_state.clientXY.y);
+  }
+  var mouse = new bot.Mouse(opt_state);
+  mouse.pressButton(button);
+  mouse.releaseButton();
+  return mouse.getState();
+};

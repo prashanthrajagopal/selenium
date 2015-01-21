@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.server;
 
+import static java.lang.String.format;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.jetty.http.HashUserRealm;
@@ -33,14 +35,14 @@ import org.openqa.selenium.net.NetworkUtils;
 import org.openqa.selenium.remote.server.DefaultDriverSessions;
 import org.openqa.selenium.remote.server.DriverServlet;
 import org.openqa.selenium.remote.server.DriverSessions;
+import org.openqa.selenium.remote.server.log.LoggingManager;
+import org.openqa.selenium.remote.server.log.LoggingOptions;
 import org.openqa.selenium.server.BrowserSessionFactory.BrowserSessionInfo;
 import org.openqa.selenium.server.cli.RemoteControlLauncher;
 import org.openqa.selenium.server.htmlrunner.HTMLLauncher;
 import org.openqa.selenium.server.htmlrunner.HTMLResultsListener;
 import org.openqa.selenium.server.htmlrunner.SeleniumHTMLRunnerResultsHandler;
 import org.openqa.selenium.server.htmlrunner.SingleTestSuiteResourceHandler;
-import org.openqa.selenium.remote.server.log.LoggingManager;
-import org.openqa.selenium.remote.server.log.LoggingOptions;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -52,8 +54,6 @@ import java.net.BindException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Properties;
-
-import static java.lang.String.format;
 
 /**
  * Provides a server that can launch/terminate browsers and can receive remote Selenium commands
@@ -624,7 +624,8 @@ public class SeleniumServer implements SslCertificateGenerator {
       HTMLLauncher launcher = new HTMLLauncher(this);
       String resultFilePath = getRequiredSystemProperty("htmlSuite.resultFilePath");
       File resultFile = new File(resultFilePath);
-      if (! resultFile.getParentFile().mkdirs()) {
+      File resultDir = resultFile.getParentFile();
+      if ((resultDir != null) && !resultDir.exists() && !resultDir.mkdirs()) {
         RemoteControlLauncher.usage("can't create directory for result file " + resultFilePath);
         System.exit(1);
       }

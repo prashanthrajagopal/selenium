@@ -25,7 +25,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
-import static org.openqa.selenium.TestWaiter.waitFor;
 import static org.openqa.selenium.WaitingConditions.elementValueToEqual;
 import static org.openqa.selenium.testing.Ignore.Driver.ALL;
 import static org.openqa.selenium.testing.Ignore.Driver.ANDROID;
@@ -626,7 +625,7 @@ public class TypingTest extends JUnit4TestBase {
     assertThat(element.getAttribute("value"), is(""));
 
     element.sendKeys(Keys.CONTROL, "v");
-    waitFor(elementValueToEqual(element, paste));
+    wait.until(elementValueToEqual(element, paste));
 
     // Cut the last 3 letters.
     element.sendKeys("" + Keys.LEFT + Keys.LEFT + Keys.LEFT +
@@ -714,7 +713,7 @@ public class TypingTest extends JUnit4TestBase {
   }
 
   @JavascriptEnabled
-  @Ignore(value = {HTMLUNIT, OPERA, ANDROID, OPERA_MOBILE, MARIONETTE})
+  @Ignore(value = {FIREFOX, HTMLUNIT, OPERA, ANDROID, OPERA_MOBILE, MARIONETTE}, issues = {6711})
   @Test
   public void testNonPrintableCharactersShouldWorkWithContentEditableOrDesignModeSet() {
     assumeFalse("not tested on mac", getEffectivePlatform().is(Platform.MAC));

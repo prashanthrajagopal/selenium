@@ -43,10 +43,11 @@ goog.require('goog.math.Coordinate');
 goog.require('goog.math.Size');
 
 
-FirefoxDriver = function(server, enableNativeEvents, win) {
+FirefoxDriver = function(server, enableNativeEvents, win, opt_pageLoadingStrategy) {
   this.server = server;
   this.enableNativeEvents = enableNativeEvents;
   this.window = win;
+  this.pageLoadingStrategy = opt_pageLoadingStrategy || 'normal';
 
   // Default to a two second timeout.
   this.alertTimeout = 2000;
@@ -125,17 +126,7 @@ FirefoxDriver.prototype.get = function(respond, parameters) {
   }
 
   if (loadEventExpected) {
-    new WebLoadingListener(respond.session.getBrowser(), function(timedOut) {
-      // Focus on the top window.
-      respond.session.setWindow(respond.session.getBrowser().contentWindow);
-      if (timedOut) {
-        respond.sendError(new WebDriverError(bot.ErrorCode.TIMEOUT,
-            'Timed out waiting for page load.'));
-      } else {
-        respond.value = '';
-        respond.send();
-      }
-    }, respond.session.getPageLoadTimeout(), respond.session.getWindow());
+    Utils.initWebLoadingListener(respond, respond.session.getWindow());
   }
 
   respond.session.getBrowser().loadURI(url);
@@ -668,18 +659,8 @@ FirefoxDriver.prototype.goForward = function(respond) {
 
 FirefoxDriver.prototype.refresh = function(respond) {
   var browser = respond.session.getBrowser();
+  Utils.initWebLoadingListener(respond, browser.contentWindow);
   browser.contentWindow.location.reload(true);
-  // Wait for the reload to finish before sending the response.
-  new WebLoadingListener(respond.session.getBrowser(), function(timedOut) {
-    // Reset to the top window.
-    respond.session.setWindow(browser.contentWindow);
-    if (timedOut) {
-      respond.sendError(new WebDriverError(bot.ErrorCode.TIMEOUT,
-          'Timed out waiting for page load.'));
-    } else {
-      respond.send();
-    }
-  }, respond.session.getPageLoadTimeout());
 };
 
 
