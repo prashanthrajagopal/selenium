@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" promptedForUpgradeToXcode5="NO" initialViewController="Awl-Pe-MbD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Awl-Pe-MbD">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -13,26 +14,44 @@
                         <viewControllerLayoutGuide type="bottom" id="I6f-E8-jgG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="z0G-Jl-N2r">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bne-NZ-nK4">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bne-NZ-nK4">
+                                <rect key="frame" x="0.0" y="556" width="598" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="z8j-nJ-BDd"/>
+                                </constraints>
                                 <items/>
                             </toolbar>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="qxD-tv-3dL">
-                                <rect key="frame" x="20" y="524" width="280" height="44"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="qxD-tv-3dL">
+                                <rect key="frame" x="11" y="487" width="280" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="rmT-KG-v3S"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wAU-xQ-LCA">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                            <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wAU-xQ-LCA">
+                                <rect key="frame" x="-2" y="-2" width="320" height="524"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qxD-tv-3dL" firstAttribute="leading" secondItem="z0G-Jl-N2r" secondAttribute="leadingMargin" constant="-5" id="2Ga-fh-ImR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bne-NZ-nK4" secondAttribute="trailing" constant="-14" id="2Pf-uq-Zpz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wAU-xQ-LCA" secondAttribute="trailing" constant="-17" id="5P7-cE-TlZ"/>
+                            <constraint firstItem="Bne-NZ-nK4" firstAttribute="leading" secondItem="z0G-Jl-N2r" secondAttribute="leadingMargin" constant="-16" id="UfH-jf-yvv"/>
+                            <constraint firstItem="Bne-NZ-nK4" firstAttribute="top" secondItem="qxD-tv-3dL" secondAttribute="bottom" constant="-44" id="XDR-Vx-0UP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qxD-tv-3dL" secondAttribute="trailing" constant="-10" id="YuQ-bX-brQ"/>
+                            <constraint firstItem="wAU-xQ-LCA" firstAttribute="leading" secondItem="z0G-Jl-N2r" secondAttribute="leadingMargin" constant="-18" id="Zws-Lc-sfa"/>
+                            <constraint firstItem="Bne-NZ-nK4" firstAttribute="top" secondItem="wAU-xQ-LCA" secondAttribute="bottom" constant="44" id="dBx-Xq-yL2"/>
+                            <constraint firstItem="wAU-xQ-LCA" firstAttribute="top" secondItem="z0G-Jl-N2r" secondAttribute="topMargin" id="gKF-TC-blJ"/>
+                            <constraint firstItem="I6f-E8-jgG" firstAttribute="top" secondItem="Bne-NZ-nK4" secondAttribute="bottom" id="k6F-Lu-zEd"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="statusLabel_" destination="qxD-tv-3dL" id="sbY-uz-p3H"/>
@@ -41,12 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i4T-QJ-foz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="88" y="33"/>
+            <point key="canvasLocation" x="165" y="34.859154929577464"/>
         </scene>
     </scenes>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>
