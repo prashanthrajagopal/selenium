@@ -8,8 +8,6 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string>selenium-icon.png</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.google.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -24,10 +22,10 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIMainStoryboardFile~iphone</key>
-	<string>Storyboard_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>Storyboard_iPad</string>
+	<key>UIMainStoryboardFile~iphone</key>
+	<string>Storyboard_iPhone</string>
 	<key>UIPrerenderedIcon</key>
 	<string>true</string>
 </dict>

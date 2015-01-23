@@ -171,6 +171,7 @@
 		83B927D30EE354060011DCC4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B927D20EE354060011DCC4 /* CFNetwork.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		83E5B3830EFF6DB7004AA772 /* HTTPJSONResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E5B30F0EFF6749004AA772 /* HTTPJSONResponse.m */; };
 		83E5B3840EFF6DB7004AA772 /* JSONRESTResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E5B3110EFF6749004AA772 /* JSONRESTResource.m */; };
+		88F481C41A72120F00044BF2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F481C31A72120F00044BF2 /* Images.xcassets */; };
 		FD61E6990FE150E5006E1274 /* WebDriverUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = FD61E6980FE150E5006E1274 /* WebDriverUtilities.m */; };
 		FD61E69E0FE151A4006E1274 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD61E69D0FE151A4006E1274 /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		FD61E6A90FE151D2006E1274 /* WebDriverPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FD61E6A60FE151D2006E1274 /* WebDriverPreferences.m */; };
@@ -359,6 +360,7 @@
 		83E5B30F0EFF6749004AA772 /* HTTPJSONResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPJSONResponse.m; sourceTree = "<group>"; };
 		83E5B3100EFF6749004AA772 /* JSONRESTResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONRESTResource.h; sourceTree = "<group>"; };
 		83E5B3110EFF6749004AA772 /* JSONRESTResource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONRESTResource.m; sourceTree = "<group>"; };
+		88F481C31A72120F00044BF2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iWebDriver/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		FD61E6970FE150E5006E1274 /* WebDriverUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebDriverUtilities.h; sourceTree = "<group>"; };
 		FD61E6980FE150E5006E1274 /* WebDriverUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebDriverUtilities.m; sourceTree = "<group>"; };
 		FD61E69D0FE151A4006E1274 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
@@ -471,6 +473,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				88F481C31A72120F00044BF2 /* Images.xcassets */,
 				402D0E4C1652189C00690ED6 /* Default-568h@2x.png */,
 				402D0E4D1652189C00690ED6 /* Default.png */,
 				402D0E4E1652189C00690ED6 /* Default@2x.png */,
@@ -816,6 +819,8 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iWebDriver" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -843,6 +848,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8311AB7A0F44EF0500921B78 /* selenium-icon.png in Resources */,
+				88F481C41A72120F00044BF2 /* Images.xcassets in Resources */,
 				644F14ED10AB4EF400858ECA /* Settings.bundle in Resources */,
 				402D0E4B1652182C00690ED6 /* Storyboard_iPhone.storyboard in Resources */,
 				402D0E4F1652189C00690ED6 /* Default-568h@2x.png in Resources */,
@@ -1067,6 +1073,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COCOAHTTPSERVER_HEADERS = "\"$(PROJECT_DIR)/lib/buildtime-src/cocoahttpserver/build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/usr/local/include\"";
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
@@ -1078,7 +1086,7 @@
 				GCC_PREFIX_HEADER = src/objc/iWebDriver_Prefix.pch;
 				HEADER_SEARCH_PATHS = "$(COCOAHTTPSERVER_HEADERS)/**";
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/iphoneos.sdk/usr/local/lib\"",
@@ -1104,6 +1112,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				COPY_PHASE_STRIP = YES;
@@ -1111,7 +1121,7 @@
 				GCC_PREFIX_HEADER = src/objc/iWebDriver_Prefix.pch;
 				HEADER_SEARCH_PATHS = "$(COCOAHTTPSERVER_HEADERS)/**";
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/iphoneos.sdk/usr/local/lib\"",
